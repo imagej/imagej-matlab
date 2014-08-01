@@ -38,8 +38,8 @@ import net.imagej.Main;
 import net.imagej.legacy.DefaultLegacyService;
 
 import org.scijava.Context;
-import org.scijava.app.App;
 import org.scijava.plugins.scripting.matlab.MATLABService;
+import org.scijava.util.VersionUtils;
 
 /**
  * Utility class for properly starting up ImageJ from within MATLAB.
@@ -50,7 +50,6 @@ public class ImageJMATLAB {
 
 	private static Context context = null;
 	private static MATLABService matlabService = null;
-	private static App ijmApp = null;
 	private static boolean verbose = true;
 
 	private static final String HELP = "-- Core ImageJ MATLAB commands --\n"
@@ -65,10 +64,8 @@ public class ImageJMATLAB {
 	 * @return The version number.
 	 */
 	public static String version() {
-		if (ijmApp != null) {
-			return ijmApp.getVersion();
-		}
-		return "Unknown";
+		final String version = VersionUtils.getVersion(ImageJMATLAB.class);
+		return version == null ? "Unknown" : version;
 	}
 
 	/**
