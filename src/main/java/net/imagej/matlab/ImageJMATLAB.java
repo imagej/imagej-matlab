@@ -136,13 +136,9 @@ public class ImageJMATLAB {
 
 		printStartupInfo();
 
-		// Print default commands usage
-		printMIJCommands();
-
 		// If we have an IJ 1.x, ensure it doesn't exit on quitting
 		disableIJExit();
 
-		ijmApp = imagej.app().getApp("ImageJ-MATLAB");
 		matlabService = imagej.get(MATLABService.class);
 
 		// Install any available commands
@@ -150,6 +146,9 @@ public class ImageJMATLAB {
 
 		// Print available commands
 		System.out.println(help());
+
+		// Print legacy MIJ command usage, if available
+		printMIJCommands();
 
 		if (verbose) {
 			System.out
@@ -170,19 +169,19 @@ public class ImageJMATLAB {
 		}
 		catch (final ClassNotFoundException e) {
 			// No MIJ found, that's ok
+			return;
 		}
 
-		if (mij != null) {
-			System.out.println("--- MIJ commands ---\n");
-			Method method;
-			try {
-				method = mij.getMethod("help");
-				final Object mijHelpMsg = method.invoke(null);
-				System.out.println(mijHelpMsg.toString());
-			}
-			catch (final Exception e) {
-				e.printStackTrace();
-			}
+		System.out.println("--- MIJ commands ---\n");
+		System.out.println("For backwards compatibility, you can use MIJ to interact with ImageJ 1.x data structures. This is deprecated functionality.");
+		Method method;
+		try {
+			method = mij.getMethod("help");
+			final Object mijHelpMsg = method.invoke(null);
+			System.out.println(mijHelpMsg.toString());
+		}
+		catch (final Exception e) {
+			e.printStackTrace();
 		}
 	}
 
