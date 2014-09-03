@@ -32,6 +32,7 @@
 package net.imagej.matlab;
 
 import java.lang.reflect.Type;
+import java.util.Collection;
 
 import matlabcontrol.extensions.MatlabNumericArray;
 import net.imagej.Dataset;
@@ -39,6 +40,7 @@ import net.imagej.Dataset;
 import org.scijava.Priority;
 import org.scijava.convert.AbstractConverter;
 import org.scijava.convert.Converter;
+import org.scijava.object.ObjectService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.util.ConversionUtils;
@@ -55,12 +57,17 @@ import org.scijava.util.GenericUtils;
  * @author Mark Hiner
  */
 @Plugin(type = Converter.class, priority = Priority.LOW_PRIORITY)
-public class MATLABDatasetConverter extends AbstractConverter {
+public class MATLABDatasetConverter extends
+	AbstractConverter<Dataset, MatlabNumericArray>
+{
 
 	@Parameter
 	private ImageJMATLABService ijmService;
 
-	// -- HandlerPlugin methods --
+	@Parameter
+	private ObjectService objectService;
+
+	// -- Converter methods --
 
 	@Override
 	public boolean canConvert(final Class<?> src, final Type dest) {
@@ -92,5 +99,20 @@ public class MATLABDatasetConverter extends AbstractConverter {
 	@Override
 	public <T> T convert(final Object src, final Class<T> dest) {
 		return (T) ijmService.getArray((Dataset) src);
+	}
+
+	@Override
+	public void populateInputCandidates(final Collection<Object> objects) {
+		objects.addAll(objectService.getObjects(Dataset.class));
+	}
+
+	@Override
+	public Class<MatlabNumericArray> getOutputType() {
+		return MatlabNumericArray.class;
+	}
+
+	@Override
+	public Class<Dataset> getInputType() {
+		return Dataset.class;
 	}
 }
