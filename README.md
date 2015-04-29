@@ -1,3 +1,5 @@
+![](http://jenkins.imagej.net/job/ImageJ-MATLAB/lastBuild/badge/icon)
+
 ImageJ MATLAB
 =============
 
