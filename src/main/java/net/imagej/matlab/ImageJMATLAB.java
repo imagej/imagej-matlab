@@ -35,7 +35,7 @@ import java.lang.reflect.Method;
 
 import net.imagej.ImageJ;
 import net.imagej.Main;
-import net.imagej.legacy.DefaultLegacyService;
+import net.imagej.legacy.LegacyService;
 
 import org.scijava.Context;
 import org.scijava.plugins.scripting.matlab.MATLABService;
@@ -189,11 +189,11 @@ public class ImageJMATLAB {
 	 */
 	private static void disableIJExit() {
 		if (context != null) {
-			final DefaultLegacyService legacyService =
-				context.getService(DefaultLegacyService.class);
+			final LegacyService legacyService =
+				context.getService(LegacyService.class);
 
 			if (legacyService != null) {
-				legacyService.getIJ1Helper().getIJ().exitWhenQuitting(false);
+				((ij.ImageJ)legacyService.getIJ1Helper().getIJ()).exitWhenQuitting(false);
 			}
 		}
 	}
