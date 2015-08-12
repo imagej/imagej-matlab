@@ -55,10 +55,10 @@ function add_to_classpath(classpath, directory)
     jarlist = dir(fullfile(directory,'*.jar'));
     path_= cell(0);
     for i = 1:length(jarlist)
-      disp(jarlist(i).name);
-        if not_yet_in_classpath(classpath, jarlist(i).name)
-            path_{length(path_) + 1} = fullfile(directory,jarlist(i).name);
-        end
+      if not_yet_in_classpath(classpath, jarlist(i).name)
+        disp(strcat(['Adding: ',jarlist(i).name]));
+        path_{length(path_) + 1} = fullfile(directory,jarlist(i).name);
+      end
     end
 
     %% Add them to the classpath
