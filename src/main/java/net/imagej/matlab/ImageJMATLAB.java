@@ -148,11 +148,7 @@ public class ImageJMATLAB {
 		printMIJCommands();
 
 		if (verbose) {
-			System.out
-				.println("--------------------------------------------------------------");
-			System.out.println("Status> ImageJ is running.");
-			System.out
-				.println("--------------------------------------------------------------");
+			printStatus("ImageJ is running.");
 		}
 	}
 
@@ -203,12 +199,10 @@ public class ImageJMATLAB {
 	 */
 	private static void printStartupInfo() {
 		if (verbose) {
-			System.out
-				.println("--------------------------------------------------------------");
+			printBreak();
 			System.out.println("ImageJ-MATLAB " + version() +
 				": MATLAB to ImageJ Interface");
-			System.out
-				.println("--------------------------------------------------------------");
+			printBreak();
 			System.out.println("Help: ImageJMATLAB.help");
 			final Runtime runtime = Runtime.getRuntime();
 			System.out.println("JVM> " + version());
@@ -255,5 +249,16 @@ public class ImageJMATLAB {
 		}
 
 		Thread.currentThread().setContextClassLoader(imagejMATLABCL);
+	}
+
+	private static void printBreak() {
+		System.out
+		.println("--------------------------------------------------------------");
+	}
+
+	private static void printStatus(final String status) {
+		printBreak();
+		System.out.println("Status> " + status);
+		printBreak();
 	}
 }
