@@ -173,7 +173,8 @@ public class ImageJMATLAB {
 		}
 
 		System.out.println("--- MIJ commands ---\n");
-		System.out.println("For backwards compatibility, you can use MIJ to interact with ImageJ 1.x data structures. This is deprecated functionality.");
+		System.out
+			.println("For backwards compatibility, you can use MIJ to interact with ImageJ 1.x data structures. This is deprecated functionality.");
 		Method method;
 		try {
 			method = mij.getMethod("help");
@@ -196,7 +197,8 @@ public class ImageJMATLAB {
 				context.getService(LegacyService.class);
 
 			if (legacyService != null) {
-				((ij.ImageJ)legacyService.getIJ1Helper().getIJ()).exitWhenQuitting(false);
+				((ij.ImageJ) legacyService.getIJ1Helper().getIJ())
+					.exitWhenQuitting(false);
 			}
 		}
 	}
@@ -260,7 +262,7 @@ public class ImageJMATLAB {
 
 	private static void printBreak() {
 		System.out
-		.println("--------------------------------------------------------------");
+			.println("--------------------------------------------------------------");
 	}
 
 	private static void printStatus(final String status) {
