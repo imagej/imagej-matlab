@@ -30,7 +30,6 @@ function ImageJ(open_imagej)
     %% Maybe open the ImageJ window
     import net.imagej.matlab.*;
     if open_imagej
-        cd ..;
         ImageJMATLAB.start();
     else
         % initialize ImageJ with the headless flag
