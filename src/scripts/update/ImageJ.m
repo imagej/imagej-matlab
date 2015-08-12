@@ -1,13 +1,13 @@
-function Miji(open_imagej)
-    %% This script sets up the classpath to Fiji and starts ImageJMATLAB
+function ImageJ(open_imagej)
+    %% This script sets up the classpath to ImageJ and starts ImageJMATLAB
     % Author: Jacques Pecreaux, Johannes Schindelin, Jean-Yves Tinevez, Mark Hiner
 
     if nargin < 1
         open_imagej = true;
     end
 
-    %% Get the Fiji directory
-    fiji_directory = fileparts(fileparts(mfilename('fullpath')));
+    %% Get the ImageJ directory
+    imagej_directory = fileparts(fileparts(mfilename('fullpath')));
 
     %% Get the Java classpath
     classpath = javaclasspath('-all');
@@ -17,15 +17,15 @@ function Miji(open_imagej)
     % Switch off warning
     warning_state = warning('off');
 
-    add_to_classpath(classpath, fullfile(fiji_directory,'jars'));
-    add_to_classpath(classpath, fullfile(fiji_directory,'plugins'));
+    add_to_classpath(classpath, fullfile(imagej_directory,'jars'));
+    add_to_classpath(classpath, fullfile(imagej_directory,'plugins'));
 
     % Switch warning back to initial settings
     warning(warning_state)
 
-    % Set the Fiji directory (and plugins.dir which is not Fiji.app/plugins/)
-    java.lang.System.setProperty('ij.dir', fiji_directory);
-    java.lang.System.setProperty('plugins.dir', fiji_directory);
+    % Set the ImageJ directory (and plugins.dir which is not ImageJ.app/plugins/)
+    java.lang.System.setProperty('ij.dir', imagej_directory);
+    java.lang.System.setProperty('plugins.dir', imagej_directory);
 
     %% Maybe open the ImageJ window
     import net.imagej.matlab.*;
@@ -46,7 +46,7 @@ function Miji(open_imagej)
     % path is fsck in a weird way, with file separator from Unix, causing a
     % mess on Windows platform.
     % So we give it up as now.
-    % %    fiji.User_Plugins.installScripts();
+    % %    imagej.User_Plugins.installScripts();
 end
 
 function add_to_classpath(classpath, directory)
