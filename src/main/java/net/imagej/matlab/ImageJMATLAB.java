@@ -52,11 +52,13 @@ public class ImageJMATLAB {
 	private static MATLABService matlabService = null;
 	private static boolean verbose = true;
 
-	private static final String HELP = "-- Core ImageJ MATLAB commands --\n"
+	private static final String HELP = "\n-- Core ImageJ MATLAB commands --\n"
 		+ "Usage: ImageJMATLAB.[command]\n"
 		+ "\tversion - return the ImageJ-MATLAB version\n"
 		+ "\tstart - starts ImageJ-MATLAB\n"
-		+ "\thelp - give a brief description of the ImageJ-MATLAB methods\n\n";
+		+ "\thelp - give a brief description of the ImageJ-MATLAB methods\n\n"
+		+ "For more information see:\n"
+		+ "\thttp://imagej.net/MATLAB\n\n";
 
 	/**
 	 * Get the version of ImageJMATLAB.
