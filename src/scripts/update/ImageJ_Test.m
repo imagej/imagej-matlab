@@ -1,6 +1,6 @@
 Miji();
-MIJ.run('Embryos (42K)');
-I=MIJ.getCurrentImage;
+IJM.run('Embryos (42K)');
+I=IJM.getCurrentImage;
 E = imadjust(wiener2(im2double(I(:,:,1))));
 imshow(E);
-MIJ.createImage('result',E, true);
+IJM.createImage('result',E, true);
