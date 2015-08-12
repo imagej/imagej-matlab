@@ -111,6 +111,13 @@ public class ImageJMATLAB {
 	 * Starts new instance of ImageJ from MATLAB using command-line arguments
 	 */
 	private static void launch(String... myargs) {
+
+		// Return if already running
+		if (context != null) {
+			printStatus("ImageJ-MATLAB is already running.");
+			return;
+		}
+
 		// Attempt to resolve any classloader issues before starting ImageJ
 		fixContextClassloader();
 
