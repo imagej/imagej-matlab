@@ -93,7 +93,7 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	@Override
 	public String usage() {
 		final String usage =
-			"-- ImageJ MATLAB commands --\n" + "Usage: IJM.[command]\n"
+			"-- ImageJ MATLAB commands --\n\n" + "Usage: IJM.[command]\n"
 				+ "\tgetDataset - creates a MATLAB matrix from the active dataset\n"
 				+ "\tgetDatasetAs(name) - creates a MATLAB matrix from the active "
 				+ "dataset and assigns it to the specified variable name";
