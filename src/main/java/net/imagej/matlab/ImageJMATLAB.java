@@ -38,6 +38,9 @@ import net.imagej.Main;
 import net.imagej.legacy.LegacyService;
 
 import org.scijava.Context;
+import org.scijava.event.ContextDisposingEvent;
+import org.scijava.event.EventHandler;
+import org.scijava.event.EventService;
 import org.scijava.plugins.scripting.matlab.MATLABService;
 import org.scijava.util.VersionUtils;
 
@@ -48,8 +51,10 @@ import org.scijava.util.VersionUtils;
  */
 public class ImageJMATLAB {
 
-	private static Context context = null;
-	private static MATLABService matlabService = null;
+	// TODO would be nice to remove the staticness of this implementation to
+	// allow multiple ImageJs to be spawned from MATLAB.
+	private static ContextListener contextListener = null;
+	private static ImageJ imagej = null;
 	private static boolean verbose = true;
 
 	private static final String HELP = "\n-- Core ImageJ MATLAB commands --\n"
@@ -102,12 +107,14 @@ public class ImageJMATLAB {
 	}
 
 	public static String help() {
-		return HELP + matlabService.commandHelp();
+		return HELP + context().getService(MATLABService.class).commandHelp();
 	}
 
 	public static Context context() {
-		return context;
+		return imagej.getContext();
 	}
+
+	// -- Helper methods --
 
 	/**
 	 * Starts new instance of ImageJ from MATLAB using command-line arguments
@@ -115,8 +122,8 @@ public class ImageJMATLAB {
 	private static void launch(String... myargs) {
 
 		// Return if already running
-		if (context != null) {
-			printStatus("ImageJ-MATLAB is already running.");
+		if (contextListener != null && !contextListener.isDisposed()) {
+			printStatus("ImageJ is already running.");
 			return;
 		}
 
@@ -137,15 +144,19 @@ public class ImageJMATLAB {
 		ImageJMATLABPrefService.setEnabled(false);
 
 		// Launch ImageJ
-		final ImageJ imagej = net.imagej.Main.launch(myargs);
-		context = imagej.getContext();
+		imagej = net.imagej.Main.launch(myargs);
 
 		printStartupInfo();
 
 		// If we have an IJ 1.x, ensure it doesn't exit on quitting
 		disableIJExit();
 
-		matlabService = imagej.get(MATLABService.class);
+		contextListener = new ContextListener();
+
+		final EventService eventService = imagej.get(EventService.class);
+		eventService.subscribe(contextListener);
+
+		final MATLABService matlabService = imagej.get(MATLABService.class);
 
 		// Install any available commands
 		matlabService.initializeCommands();
@@ -194,9 +205,9 @@ public class ImageJMATLAB {
 	 * within MATLAB.
 	 */
 	private static void disableIJExit() {
-		if (context != null) {
+		if (context() != null) {
 			final LegacyService legacyService =
-				context.getService(LegacyService.class);
+				context().getService(LegacyService.class);
 
 			if (legacyService != null) {
 				((ij.ImageJ) legacyService.getIJ1Helper().getIJ())
@@ -271,5 +282,22 @@ public class ImageJMATLAB {
 		printBreak();
 		System.out.println("Status> " + status);
 		printBreak();
+	}
+
+	/**
+	 * Helper class to determine if a Context has been disposed or not.
+	 */
+	private static class ContextListener {
+
+		private boolean disposed = false;
+
+		@EventHandler
+		public void onEvent(final ContextDisposingEvent e) {
+			disposed = true;
+		}
+
+		public boolean isDisposed() {
+			return disposed;
+		}
 	}
 }
