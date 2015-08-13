@@ -73,16 +73,16 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	 * Converts the active {@link Dataset} to a MATLAB matrix, stored in a
 	 * variable using {@link Dataset#getName()}.
 	 */
-	public void importDataset() {
+	public void getDataset() {
 		final Dataset activeDataset = imageDisplayService.getActiveDataset();
 
 		importDataset(activeDataset.getName(), activeDataset);
 	}
 
 	/**
-	 * As {@link #importDataset()}, using the specified variable name.
+	 * As {@link #getDataset()}, using the specified variable name.
 	 */
-	public void importDataset(final String name) {
+	public void getDatasetAs(final String name) {
 		final Dataset activeDataset = imageDisplayService.getActiveDataset();
 
 		importDataset(name, activeDataset);
@@ -94,9 +94,9 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	public String usage() {
 		final String usage =
 			"-- ImageJ MATLAB commands --\n" + "Usage: IJM.[command]\n"
-				+ "\timportDataset - creates a MATLAB matrix from the active dataset\n"
-				+ "\timportDataset(name) - creates a MATLAB matrix with the given"
-				+ " name from the active dataset";
+				+ "\tgetDataset - creates a MATLAB matrix from the active dataset\n"
+				+ "\tgetDatasetAs(name) - creates a MATLAB matrix from the active "
+				+ "dataset and assigns it to the specified variable name";
 		return usage;
 	}
 

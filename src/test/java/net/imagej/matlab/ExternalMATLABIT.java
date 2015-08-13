@@ -197,7 +197,7 @@ public class ExternalMATLABIT {
 		final Display<?> createDisplay = displayService.createDisplay(dataset);
 		displayService.setActiveDisplay(createDisplay);
 
-		ijCmds.importDataset("data");
+		ijCmds.getDatasetAs("data");
 
 		final ScriptModule scriptModule =
 			scriptService.run("noImport.m", sumScriptNoImport, true).get();
