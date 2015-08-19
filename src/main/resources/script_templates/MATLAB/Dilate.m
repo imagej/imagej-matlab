@@ -1,7 +1,8 @@
 % @matrix data
 % @OUTPUT net.imagej.Dataset rval
 
-% Performs dilation on the active dataset with a preset structure
+% Performs dilation with a fixed structure, operating on the
+% active dataset
 
 rval = uint8(data); % convert to uint8
 mask = im2bw(rval,0.5); % make bw mask
