@@ -34,12 +34,9 @@ package net.imagej.matlab;
 import matlabcontrol.extensions.MatlabNumericArray;
 import net.imagej.Dataset;
 import net.imagej.display.ImageDisplayService;
+import net.imagej.display.process.SingleInputPreprocessor;
 
 import org.scijava.Priority;
-import org.scijava.module.Module;
-import org.scijava.module.ModuleItem;
-import org.scijava.module.ModuleService;
-import org.scijava.module.process.AbstractPreprocessorPlugin;
 import org.scijava.module.process.PreprocessorPlugin;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
@@ -51,44 +48,30 @@ import org.scijava.plugin.Plugin;
  * @author Mark Hiner
  */
 @Plugin(type = PreprocessorPlugin.class, priority = Priority.VERY_HIGH_PRIORITY)
-public class MATLABNumericArrayPreprocessor extends AbstractPreprocessorPlugin {
-
-	@Parameter(required = false)
-	private ModuleService moduleService;
+public class MATLABNumericArrayPreprocessor extends SingleInputPreprocessor<MatlabNumericArray> {
 
 	@Parameter(required = false)
 	private ImageDisplayService imageDisplayService;
 
-	@Parameter
+	@Parameter(required = false)
 	private ImageJMATLABService ijmService;
 
-	@Override
-	public void process(final Module module) {
-		if (imageDisplayService == null) return;
-		if (moduleService == null) return;
-
-		// Get the active dataset
-		final String datasetLabel =
-			getSingleInput(module, MatlabNumericArray.class);
-		final Dataset activeDataset = imageDisplayService.getActiveDataset();
-
-		if (datasetLabel != null && activeDataset != null) {
-			// Convert the active dataset to a MATLAB-compatible array.
-
-			final MatlabNumericArray matrix = ijmService.getArray(activeDataset);
-			module.setInput(datasetLabel, matrix);
-			module.setResolved(datasetLabel, true);
-		}
+	public MATLABNumericArrayPreprocessor() {
+		super(MatlabNumericArray.class);
 	}
 
-	// -- Helper methods --
+	@Override
+	public MatlabNumericArray getValue() {
+		if (imageDisplayService == null || ijmService == null) return null;
+		final Dataset activeDataset = imageDisplayService.getActiveDataset();
+		MatlabNumericArray matrix = null;
 
-	private String getSingleInput(final Module module, final Class<?> type) {
-		if (moduleService == null) return null;
-		final ModuleItem<?> item = moduleService.getSingleInput(module, type);
-		if (item == null || !item.isAutoFill()) return null;
+		if (activeDataset != null) {
+			// Convert the active dataset to a MATLAB-compatible array.
+			matrix = ijmService.getArray(activeDataset);
+		}
 
-		return item.getName();
+		return matrix;
 	}
 
 }
