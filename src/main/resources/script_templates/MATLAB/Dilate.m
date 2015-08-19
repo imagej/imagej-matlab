@@ -5,6 +5,7 @@
 % active dataset
 
 rval = uint8(data); % convert to uint8
+rval = mat2gray(rval); % normalize data
 mask = im2bw(rval,0.5); % make bw mask
 se = strel('line',4,180); % create structure to use in dilation
 mask = imdilate(mask,se); % perform dilation on the mask
