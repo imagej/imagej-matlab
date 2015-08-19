@@ -49,4 +49,10 @@ public interface ImageJMATLABService extends Service {
 	 * be safely passed to MATLAB.
 	 */
 	MatlabNumericArray getArray(Dataset dataset);
+
+	/**
+	 * Converts a {@link MatlabNumericArray} retrieved from MATLAB to an
+	 * {@link Dataset}.
+	 */
+	Dataset getDataset(MatlabNumericArray array);
 }

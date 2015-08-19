@@ -36,9 +36,14 @@ import java.lang.reflect.Array;
 import matlabcontrol.extensions.MatlabNumericArray;
 import matlabcontrol.extensions.MatlabNumericArray.DoubleArrayType;
 import net.imagej.Dataset;
+import net.imagej.DatasetService;
+import net.imagej.axis.Axes;
+import net.imagej.axis.AxisType;
 import net.imglib2.Cursor;
 import net.imglib2.type.numeric.RealType;
+import net.imglib2.type.numeric.real.DoubleType;
 
+import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.service.AbstractService;
 import org.scijava.service.Service;
@@ -54,12 +59,20 @@ public class DefaultImageJMATLABService extends AbstractService implements
 	ImageJMATLABService
 {
 
+	@Parameter
+	private DatasetService datasetService;
+
 	@Override
 	public MatlabNumericArray getArray(final Dataset dataset) {
 		return convertToArray(dataset);
 	}
 
-	// -- Helper methods --
+	@Override
+	public Dataset getDataset(final MatlabNumericArray array) {
+		return convertToDataset(array);
+	}
+
+	// -- Helper methods: to array --
 
 	/**
 	 * Helper method to convert a {@link Dataset} to a {@link MatlabNumericArray}.
@@ -144,4 +157,43 @@ public class DefaultImageJMATLABService extends AbstractService implements
 			}
 		}
 	}
+
+	// -- Helper methods: to dataset --
+
+	/**
+	 * Helper method to convert a {@link MatlabNumericArray} to a {@link Dataset}.
+	 */
+	private Dataset convertToDataset(final MatlabNumericArray array) {
+		final int[] lengths = array.getLengths();
+
+		final long[] dims = new long[lengths.length];
+		for (int i=0; i<dims.length; i++) {
+			dims[i] = (lengths[i]);
+		}
+
+		final String name = "MATLAB image";
+		final AxisType[] axes = new AxisType[lengths.length];
+
+		// Populate AxisType array
+		// In MATLAB, first two axes are X,Y. Subsequent axes are "pages"
+		for (int i=0; i<axes.length; i++) {
+			if (i == 0) axes[i] = Axes.X;
+			else if (i == 1) axes[i] = Axes.Y;
+			else axes[i] = Axes.get("Page " + (i - 2), false);
+		}
+
+		final Dataset dataset =
+			datasetService.create(new DoubleType(), dims, name, axes);
+
+		// Copy the data
+		final Cursor<RealType<?>> cursor = dataset.localizingCursor();
+		int pos = 0;
+		while (cursor.hasNext()) {
+			cursor.fwd();
+			cursor.get().setReal(array.getRealValue(pos++));
+		}
+
+		return dataset;
+	}
+
 }
