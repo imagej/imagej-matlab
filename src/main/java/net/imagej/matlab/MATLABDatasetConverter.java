@@ -31,9 +31,6 @@
 
 package net.imagej.matlab;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
-
 import matlabcontrol.extensions.MatlabNumericArray;
 import net.imagej.Dataset;
 
@@ -43,8 +40,6 @@ import org.scijava.convert.Converter;
 import org.scijava.object.ObjectService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-import org.scijava.util.ConversionUtils;
-import org.scijava.util.GenericUtils;
 
 /**
  * {@link Converter} implementation for converting {@link Dataset} to
@@ -69,41 +64,10 @@ public class MATLABDatasetConverter extends
 
 	// -- Converter methods --
 
-	@Override
-	public boolean canConvert(final Class<?> src, final Type dest) {
-		return canConvert(src, GenericUtils.getClass(dest));
-	}
-
-	@Override
-	public boolean canConvert(final Class<?> src, final Class<?> dest) {
-		return ConversionUtils.canCast(src, Dataset.class) &&
-			ConversionUtils.canCast(dest, MatlabNumericArray.class);
-	}
-
-	@Override
-	public boolean canConvert(final Object src, final Type dest) {
-		return canConvert(src.getClass(), dest);
-	}
-
-	@Override
-	public boolean canConvert(final Object src, final Class<?> dest) {
-		return canConvert(src.getClass(), dest);
-	}
-
-	@Override
-	public Object convert(final Object src, final Type dest) {
-		return convert(src, GenericUtils.getClass(dest));
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T convert(final Object src, final Class<T> dest) {
 		return (T) ijmService.getArray((Dataset) src);
-	}
-
-	@Override
-	public void populateInputCandidates(final Collection<Object> objects) {
-		objects.addAll(objectService.getObjects(Dataset.class));
 	}
 
 	@Override
