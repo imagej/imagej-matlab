@@ -31,6 +31,7 @@
 
 package net.imagej.matlab;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.imagej.ImageJ;
@@ -165,7 +166,7 @@ public class ImageJMATLAB {
 		System.out.println(help());
 
 		// Print legacy MIJ command usage, if available
-		printMIJCommands();
+		printMIJCommands(matlabService);
 
 		if (verbose) {
 			printStatus("ImageJ is running.");
@@ -175,7 +176,7 @@ public class ImageJMATLAB {
 	/**
 	 * Helper method to print MIJ usage if it's present on the classpath.
 	 */
-	private static void printMIJCommands() {
+	private static void printMIJCommands(final MATLABService matlabService) {
 		Class<?> mij = null;
 		try {
 			mij = Class.forName("MIJ");
@@ -183,6 +184,14 @@ public class ImageJMATLAB {
 		catch (final ClassNotFoundException e) {
 			// No MIJ found, that's ok
 			return;
+		}
+
+		try {
+			matlabService.makeMATLABVariable("MIJ", mij.getConstructor()
+				.newInstance());
+		}
+		catch (Exception exc) {
+			System.out.println("Unable to initialize MIJ variable.");
 		}
 
 		System.out.println("--- MIJ commands ---\n");
@@ -195,7 +204,7 @@ public class ImageJMATLAB {
 			System.out.println(mijHelpMsg.toString());
 		}
 		catch (final Exception e) {
-			e.printStackTrace();
+			System.out.println("Unable to print MIJ commands.");
 		}
 	}
 
