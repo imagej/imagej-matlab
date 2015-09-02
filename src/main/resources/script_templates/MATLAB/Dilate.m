@@ -1,6 +1,6 @@
 % @matrix data
-% @OUTPUT net.imagej.Dataset rval
-% @OUTPUT net.imagej.Dataset mask
+% @OUTPUT Dataset rval
+% @OUTPUT Dataset mask
 
 % Performs dilation with a 3x3 square,
 % operating on the active dataset
