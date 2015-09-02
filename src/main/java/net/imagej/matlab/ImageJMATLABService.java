@@ -33,6 +33,7 @@ package net.imagej.matlab;
 
 import matlabcontrol.extensions.MatlabNumericArray;
 import net.imagej.Dataset;
+import net.imagej.ImageJService;
 
 import org.scijava.service.Service;
 
@@ -42,7 +43,7 @@ import org.scijava.service.Service;
  *
  * @author Mark Hiner
  */
-public interface ImageJMATLABService extends Service {
+public interface ImageJMATLABService extends ImageJService {
 
 	/**
 	 * Converts a {@link Dataset} to a {@link MatlabNumericArray} which can then
