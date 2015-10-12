@@ -1,10 +1,19 @@
-function ImageJ(open_imagej)
-    %% This script sets up the classpath to ImageJ and starts ImageJMATLAB
-    % Author: Jacques Pecreaux, Johannes Schindelin, Jean-Yves Tinevez, Mark Hiner
+function ImageJ(open_imagej, verbose)
+    %% This script adds the ImageJ libraries to the MATLAB classpath. By default,
+    %% it will also start up an ImageJ instance within MATLAB.
+    %% Parameters:
+    %%  open_imagej - If false, an ImageJ instance will not be launched. Default: true
+    %%  verbose - If true, a confirmation message will be printed the first time
+    %%            a jar is added to the MATLAB classpath. Default: false
+    %% Author: Jacques Pecreaux, Johannes Schindelin, Jean-Yves Tinevez, Mark Hiner
 
     if nargin < 1
         open_imagej = true;
     end
+
+    if nargin < 2
+        verbose = false;
+    end;
 
     %% Get the ImageJ directory
     imagej_directory = fileparts(fileparts(mfilename('fullpath')));
@@ -17,8 +26,8 @@ function ImageJ(open_imagej)
     % Switch off warning
     warning_state = warning('off');
 
-    add_to_classpath(classpath, fullfile(imagej_directory,'jars'));
-    add_to_classpath(classpath, fullfile(imagej_directory,'plugins'));
+    add_to_classpath(classpath, fullfile(imagej_directory,'jars'), verbose);
+    add_to_classpath(classpath, fullfile(imagej_directory,'plugins'), verbose);
 
     % Switch warning back to initial settings
     warning(warning_state)
@@ -48,7 +57,7 @@ function ImageJ(open_imagej)
     % %    imagej.User_Plugins.installScripts();
 end
 
-function add_to_classpath(classpath, directory)
+function add_to_classpath(classpath, directory, verbose)
     % Get all .jar files in the directory
     dirData = dir(directory);
     dirIndex = [dirData.isdir];
@@ -56,7 +65,9 @@ function add_to_classpath(classpath, directory)
     path_= cell(0);
     for i = 1:length(jarlist)
       if not_yet_in_classpath(classpath, jarlist(i).name)
-        disp(strcat(['Adding: ',jarlist(i).name]));
+        if verbose
+          disp(strcat(['Adding: ',jarlist(i).name]));
+        end
         path_{length(path_) + 1} = fullfile(directory,jarlist(i).name);
       end
     end
@@ -72,7 +83,7 @@ function add_to_classpath(classpath, directory)
 
     for iDir = find(validIndex)
       nextDir = fullfile(directory,subDirs{iDir});
-      add_to_classpath(classpath, nextDir);
+      add_to_classpath(classpath, nextDir, verbose);
     end
 end
 
