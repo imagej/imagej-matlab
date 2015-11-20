@@ -16,6 +16,51 @@
 	<description>Open source ImageJ extensions and utilities for transferring ImageJ data structures between MATLAB and an external ImageJ application, or running ImageJ from within MATLAB.</description>
 	<inceptionYear>2014</inceptionYear>
 
+	<developers>
+		<developer>
+			<id>hinerm</id>
+			<name>Mark Hiner</name>
+			<email>hiner@wisc.edu</email>
+			<url>http://loci.wisc.edu/people/mark-hiner</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+		<developer>
+			<id>ctrueden</id>
+			<name>Curtis Rueden</name>
+			<email>ctrueden@wisc.edu</email>
+			<url>http://loci.wisc.edu/people/curtis-rueden</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+	</developers>
+	<contributors>
+		<!--
+		NB: Need a least one element to override the parent.
+		See: https://issues.apache.org/jira/browse/MNG-5220
+		-->
+		<contributor><name>None</name></contributor>
+	</contributors>
+
 	<scm>
 		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
 		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
