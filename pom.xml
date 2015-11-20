@@ -14,14 +14,36 @@
 
 	<name>ImageJ-MATLAB</name>
 	<description>Open source ImageJ extensions and utilities for transferring ImageJ data structures between MATLAB and an external ImageJ application, or running ImageJ from within MATLAB.</description>
-  <inceptionYear>2014</inceptionYear>
+	<inceptionYear>2014</inceptionYear>
+
+	<scm>
+		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
+		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/imagej/imagej-matlab</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/imagej/imagej-matlab/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://jenkins.imagej.net/job/ImageJ-MATLAB/</url>
+	</ciManagement>
 
 	<properties>
 		<matlabcontrol.version>4.1.0</matlabcontrol.version>
 	</properties>
 
-	<dependencies>
+	<repositories>
+		<!-- NB: for project parent, in case of partial checkout -->
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
 
+	<dependencies>
 		<!-- SCIFIO dependencies -->
 		<dependency>
 			<groupId>io.scif</groupId>
@@ -77,31 +99,6 @@
 		</dependency>
 	</dependencies>
 
-	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/ImageJ-MATLAB/</url>
-	</ciManagement>
-
-	<scm>
-		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
-		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
-		<tag>HEAD</tag>
-		<url>https://github.com/imagej/imagej-matlab</url>
-	</scm>
-
-	<issueManagement>
-		<system>GitHub Issues</system>
-		<url>https://github.com/imagej/imagej-matlab/issues</url>
-	</issueManagement>
-
-	<repositories>
-		<!-- NB: for project parent, in case of partial checkout -->
-		<repository>
-			<id>imagej.public</id>
-			<url>http://maven.imagej.net/content/groups/public</url>
-		</repository>
-	</repositories>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -113,5 +110,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
