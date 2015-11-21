@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>imagej-matlab</artifactId>
-	<version>0.6.1-SNAPSHOT</version>
+	<version>0.6.2-SNAPSHOT</version>
 
 	<name>ImageJ-MATLAB</name>
 	<description>Open source ImageJ extensions and utilities for transferring ImageJ data structures between MATLAB and an external ImageJ application, or running ImageJ from within MATLAB.</description>
