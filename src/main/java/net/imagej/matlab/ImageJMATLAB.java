@@ -33,6 +33,8 @@ package net.imagej.matlab;
 
 import java.lang.reflect.Method;
 
+import javax.xml.xpath.XPathFactory;
+
 import net.imagej.ImageJ;
 import net.imagej.Main;
 import net.imagej.legacy.LegacyService;
@@ -126,6 +128,11 @@ public class ImageJMATLAB {
 
 		// Attempt to resolve any classloader issues before starting ImageJ
 		fixContextClassloader();
+
+		// HACK: fix to Java XPathFactory to avoid potential clash with SAX-9 and Java 8
+		// see: https://sourceforge.net/p/saxon/mailman/message/33221102/
+		System.setProperty(XPathFactory.DEFAULT_PROPERTY_NAME + ":" + XPathFactory.DEFAULT_OBJECT_MODEL_URI,
+				"com.sun.org.apache.xpath.internal.jaxp.XPathFactoryImpl");
 
 		// Print ImageJ arguments
 		if (myargs == null) myargs = new String[0];
