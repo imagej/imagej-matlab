@@ -259,7 +259,6 @@ public class ImageJMATLAB {
 				": MATLAB to ImageJ Interface");
 			printBreak();
 			final Runtime runtime = Runtime.getRuntime();
-			System.out.println("JVM> " + version());
 			System.out.println("JVM> Version: " + System.getProperty("java.version"));
 			System.out.println("JVM> Total amount of memory: " +
 				Math.round(runtime.totalMemory() / 1024) + " Kb");
