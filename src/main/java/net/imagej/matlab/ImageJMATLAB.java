@@ -31,7 +31,6 @@
 
 package net.imagej.matlab;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.imagej.ImageJ;
