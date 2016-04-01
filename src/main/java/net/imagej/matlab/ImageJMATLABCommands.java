@@ -85,18 +85,14 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	 * variable using {@link Dataset#getName()}.
 	 */
 	public void getDataset() {
-		final Dataset activeDataset = imageDisplayService.getActiveDataset();
-
-		importDataset(activeDataset.getName(), activeDataset);
+		importDataset(null);
 	}
 
 	/**
 	 * As {@link #getDataset()}, using the specified variable name.
 	 */
 	public void getDatasetAs(final String name) {
-		final Dataset activeDataset = imageDisplayService.getActiveDataset();
-
-		importDataset(name, activeDataset);
+		importDataset(name);
 	}
 
 	/**
@@ -130,10 +126,10 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	public String help() {
 		final String usage =
 			"-- ImageJ MATLAB commands --\n\n" + "Usage: IJM.[command]\n"
-				+ "\thelp - give a brief description of available commands\n"
-				+ "\tgetDataset - creates a MATLAB matrix from the active dataset\n"
+				+ "\thelp - prints a brief description of available commands\n"
+				+ "\tgetDataset - creates a MATLAB matrix from the active ImageJ image\n"
 				+ "\tgetDatasetAs(name) - creates a MATLAB matrix from the active "
-				+ "dataset and assigns it to the specified variable name\n"
+				+ "ImageJ image, and assigns it to the specified variable name\n"
 				+ "\tshow(name) - takes the MATLAB matrix with the specified name and displays it as an image";
 		return usage;
 	}
@@ -144,13 +140,19 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	 * Helper method to perform {@link Dataset} conversion, and set the variable
 	 * within MATLAB.
 	 */
-	private void importDataset(final String name, final Dataset dataset) {
-		if (dataset == null) {
-			logService.error("No active dataset to import to MATLAB.");
+	private void importDataset(String name) {
+
+		final Dataset activeDataset = imageDisplayService.getActiveDataset();
+
+		if (activeDataset == null) {
+			logService.info("No active image. Please open an image in ImageJ first.");
+			return;
 		}
 
+		if (name == null) name = activeDataset.getName();
+
 		// Convert the active dataset to a MATLAB-compatible array.
-		final MatlabNumericArray matrix = ijmService.getArray(dataset);
+		final MatlabNumericArray matrix = ijmService.getArray(activeDataset);
 
 		matlabService.makeMATLABVariable(name, matrix);
 	}
