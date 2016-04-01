@@ -78,6 +78,7 @@
 
 	<properties>
 		<matlabcontrol.version>4.1.0</matlabcontrol.version>
+    <scripting-matlab.version>0.5.0</scripting-matlab.version>
 	</properties>
 
 	<repositories>
