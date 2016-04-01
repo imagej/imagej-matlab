@@ -31,7 +31,8 @@
 
 package net.imagej.matlab;
 
-import matlabcontrol.extensions.MatlabNumericArray;
+import javax.script.ScriptEngine;
+
 import net.imagej.Dataset;
 import net.imagej.display.ImageDisplayService;
 
@@ -41,6 +42,10 @@ import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.plugins.scripting.matlab.MATLABCommands;
 import org.scijava.plugins.scripting.matlab.MATLABService;
+import org.scijava.script.ScriptService;
+import org.scijava.ui.UIService;
+
+import matlabcontrol.extensions.MatlabNumericArray;
 
 /**
  * {@link MATLABCommands} suite for converting ImageJ data structures to MATLAB
@@ -56,14 +61,20 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 	@Parameter(required = false)
 	private ImageDisplayService imageDisplayService;
 
+	@Parameter(required = false)
+	private UIService uiService;
+
+	@Parameter
+	private LogService logService;
+
+	@Parameter
+	private ScriptService scriptService;
+
 	@Parameter
 	private ImageJMATLABService ijmService;
 
 	@Parameter
 	private MATLABService matlabService;
-
-	@Parameter
-	private LogService logService;
 
 	public static final String NAME = "IJM";
 
@@ -88,6 +99,31 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 		importDataset(name, activeDataset);
 	}
 
+	/**
+	 * Take an array variable in MATLAB and attempt to display it as a Dataset
+	 * in ImageJ
+	 */
+	public void show(final String matrix) {
+		if (uiService == null) {
+			logService.info("No UI available to display array");
+			return;
+		}
+
+		final ScriptEngine engine =
+				scriptService.getLanguageByName("MATLAB").getScriptEngine();
+		final Object o = engine.get(matrix);
+		MatlabNumericArray array = null;
+
+		if (o instanceof MatlabNumericArray) array = (MatlabNumericArray) o;
+
+		if (array == null) {
+			logService.info("Variable of name: " + matrix + " is not an array.");
+			return;
+		}
+
+		uiService.show(ijmService.getDataset(array));
+	}
+
 	// -- MATLABCommands methods --
 
 	@Override
@@ -97,7 +133,8 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 				+ "\thelp - give a brief description of available commands\n"
 				+ "\tgetDataset - creates a MATLAB matrix from the active dataset\n"
 				+ "\tgetDatasetAs(name) - creates a MATLAB matrix from the active "
-				+ "dataset and assigns it to the specified variable name";
+				+ "dataset and assigns it to the specified variable name\n"
+				+ "\tshow(name) - takes the MATLAB matrix with the specified name and displays it as an image";
 		return usage;
 	}
 
