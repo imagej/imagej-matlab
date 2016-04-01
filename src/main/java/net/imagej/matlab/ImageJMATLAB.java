@@ -57,13 +57,10 @@ public class ImageJMATLAB {
 	private static ImageJ imagej = null;
 	private static boolean verbose = true;
 
-	private static final String HELP = "\n-- Core ImageJ MATLAB commands --\n"
-		+ "Usage: ImageJMATLAB.[command]\n"
-		+ "\tversion - return the ImageJ-MATLAB version\n"
-		+ "\tstart - starts ImageJ-MATLAB\n"
-		+ "\thelp - give a brief description of the ImageJ-MATLAB methods\n\n"
-		+ "For more information see:\n"
-		+ "\thttp://imagej.net/MATLAB\n\n";
+	private static final String WELCOME = "\n-- Welcome to ImageJ-MATLAB --\n"
+			+ "ImageJ-MATLAB consists of an extensible set of commands for passing information between ImageJ and MATLAB."
+			+ "\nSee the individual sections below for a list of available commands.\n\n"
+			+ "For more information and examples see:\n\thttp://imagej.net/MATLAB-Scripting\n\n";
 
 	/**
 	 * Get the version of ImageJMATLAB.
@@ -107,7 +104,7 @@ public class ImageJMATLAB {
 	}
 
 	public static String help() {
-		return HELP + context().getService(MATLABService.class).commandHelp();
+		return WELCOME + context().getService(MATLABService.class).commandHelp() + "\n\n" + getMIJHelp();
 	}
 
 	public static Context context() {
@@ -193,18 +190,39 @@ public class ImageJMATLAB {
 			System.out.println("Unable to initialize MIJ variable.");
 		}
 
-		System.out.println("--- MIJ commands ---\n");
-		System.out
-			.println("For backwards compatibility, you can use MIJ to interact with ImageJ 1.x data structures. This is deprecated functionality.");
+		final String helpString = getMIJHelp();
+		if (helpString.isEmpty()) {
+			System.out.println("Unable to print MIJ commands.");
+		}
+	}
+
+	private static String getMIJHelp() {
+		String helpString = "";
+		Class<?> mij = null;
+
+		try {
+			mij = Class.forName("MIJ");
+		}
+		catch (final ClassNotFoundException e) {
+			// No MIJ found, that's ok
+			return "";
+		}
+
 		Method method;
 		try {
 			method = mij.getMethod("help");
+
+			helpString += "--- MIJ commands ---\nFor backwards compatibility, you can use"
+					+ " MIJ to interact with ImageJ 1.x data structures. This is deprecated functionality.\n";
+
 			final Object mijHelpMsg = method.invoke(null);
-			System.out.println(mijHelpMsg.toString());
+			helpString += mijHelpMsg.toString() + "\n";
 		}
 		catch (final Exception e) {
-			System.out.println("Unable to print MIJ commands.");
+			return "";
 		}
+
+		return helpString;
 	}
 
 	/**
@@ -233,7 +251,6 @@ public class ImageJMATLAB {
 			System.out.println("ImageJ-MATLAB " + version() +
 				": MATLAB to ImageJ Interface");
 			printBreak();
-			System.out.println("Help: ImageJMATLAB.help");
 			final Runtime runtime = Runtime.getRuntime();
 			System.out.println("JVM> " + version());
 			System.out.println("JVM> Version: " + System.getProperty("java.version"));
