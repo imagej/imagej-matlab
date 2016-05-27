@@ -13,7 +13,7 @@ function ImageJ(open_imagej, verbose)
 
     if nargin < 2
         verbose = false;
-    end;
+    end
 
     %% Get the ImageJ directory
     imagej_directory = fileparts(fileparts(mfilename('fullpath')));
@@ -24,7 +24,7 @@ function ImageJ(open_imagej, verbose)
     %% Add all libraries in jars/ and plugins/ to the classpath
 
     % Switch off warning
-    warning_state = warning('off');
+    warning_state = warning('off','MATLAB:javaclasspath:jarAlreadySpecified');
 
     add_to_classpath(classpath, fullfile(imagej_directory,'jars'), verbose);
     add_to_classpath(classpath, fullfile(imagej_directory,'plugins'), verbose);
