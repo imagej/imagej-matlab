@@ -171,7 +171,6 @@ public class DefaultImageJMATLABService extends AbstractService implements
 			dims[i] = (lengths[i]);
 		}
 
-		final String name = "MATLAB image";
 		final AxisType[] axes = new AxisType[lengths.length];
 
 		// Populate AxisType array
@@ -183,7 +182,7 @@ public class DefaultImageJMATLABService extends AbstractService implements
 		}
 
 		final Dataset dataset =
-			datasetService.create(new DoubleType(), dims, name, axes);
+			datasetService.create(new DoubleType(), dims, null, axes);
 
 		// Copy the data
 		final Cursor<RealType<?>> cursor = dataset.localizingCursor();
