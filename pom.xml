@@ -3,18 +3,30 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>net.imagej</groupId>
-		<artifactId>pom-imagej</artifactId>
-		<version>14.0.0</version>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>12.0.0</version>
 		<relativePath />
 	</parent>
 
+	<groupId>net.imagej</groupId>
 	<artifactId>imagej-matlab</artifactId>
 	<version>0.7.2-SNAPSHOT</version>
 
 	<name>ImageJ-MATLAB</name>
 	<description>Open source ImageJ extensions and utilities for transferring ImageJ data structures between MATLAB and an external ImageJ application, or running ImageJ from within MATLAB.</description>
+	<url>http://imagej.net/ImageJ-MATLAB</url>
 	<inceptionYear>2014</inceptionYear>
+	<organization>
+		<name>ImageJ</name>
+		<url>http://imagej.net/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Simplified BSD License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<developers>
 		<developer>
@@ -50,6 +62,13 @@
 		<contributor><name>None</name></contributor>
 	</contributors>
 
+	<mailingLists>
+		<mailingList>
+			<name>ImageJ Forum</name>
+			<archive>http://forum.imagej.net/</archive>
+		</mailingList>
+	</mailingLists>
+
 	<scm>
 		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
 		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
@@ -66,6 +85,12 @@
 	</ciManagement>
 
 	<properties>
+		<package-name>net.imagej.matlab</package-name>
+		<license.licenseName>bsd_2</license.licenseName>
+		<license.copyrightOwners>Board of Regents of the University of
+Wisconsin-Madison, Broad Institute of MIT and Harvard, and Max Planck
+Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
+		<license.projectName>ImageJ software for multidimensional image processing and analysis.</license.projectName>
 		<matlabcontrol.version>4.1.0</matlabcontrol.version>
     <scripting-matlab.version>0.5.0</scripting-matlab.version>
 	</properties>
