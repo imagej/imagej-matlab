@@ -39,10 +39,10 @@ function ImageJ(open_imagej, verbose)
     %% Maybe open the ImageJ window
     import net.imagej.matlab.*;
     if open_imagej
-        ImageJMATLAB.start();
+        ImageJMATLAB.start(verbose);
     else
         % initialize ImageJ with the headless flag
-        ImageJMATLAB.start('--headless');
+        ImageJMATLAB.start(verbose, '--headless');
     end
 
     % Make sure that the scripts are found.
