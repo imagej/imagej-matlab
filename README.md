@@ -1,4 +1,4 @@
-[![](http://jenkins.imagej.net/job/ImageJ-MATLAB/lastBuild/badge/icon)](http://jenkins.imagej.net/job/ImageJ-MATLAB/)
+[![](https://travis-ci.org/imagej/imagej-matlab.svg?branch=master)](https://travis-ci.org/imagej/imagej-matlab)
 
 ImageJ MATLAB
 =============
