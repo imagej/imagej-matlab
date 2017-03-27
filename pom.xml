@@ -99,7 +99,6 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 	</properties>
 
 	<repositories>
-		<!-- NB: for project parent, in case of partial checkout -->
 		<repository>
 			<id>imagej.public</id>
 			<url>http://maven.imagej.net/content/groups/public</url>
