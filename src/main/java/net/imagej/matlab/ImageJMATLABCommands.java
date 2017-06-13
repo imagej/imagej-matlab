@@ -117,7 +117,7 @@ public class ImageJMATLABCommands extends AbstractRichPlugin implements
 			return;
 		}
 
-		uiService.show(ijmService.getDataset(array));
+		uiService.show(matrix, ijmService.getDataset(array));
 	}
 
 	// -- MATLABCommands methods --
