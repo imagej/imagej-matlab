@@ -96,6 +96,9 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 		<license.inceptionYear>2009</license.inceptionYear>
 		<matlabcontrol.version>4.1.0</matlabcontrol.version>
     <scripting-matlab.version>0.5.0</scripting-matlab.version>
+
+		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
+		<releaseProfiles>deploy-to-imagej</releaseProfiles>
 	</properties>
 
 	<repositories>
