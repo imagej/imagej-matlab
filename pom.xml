@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>17.1.1</version>
+		<version>22.3.0</version>
 		<relativePath />
 	</parent>
 
@@ -94,11 +94,11 @@ Wisconsin-Madison, Broad Institute of MIT and Harvard, and Max Planck
 Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 		<license.projectName>ImageJ software for multidimensional image processing and analysis.</license.projectName>
 		<license.inceptionYear>2009</license.inceptionYear>
-		<matlabcontrol.version>4.1.0</matlabcontrol.version>
-    <scripting-matlab.version>0.5.0</scripting-matlab.version>
 
 		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
 		<releaseProfiles>deploy-to-imagej</releaseProfiles>
+
+		<matlabcontrol.version>4.1.0</matlabcontrol.version>
 	</properties>
 
 	<repositories>
