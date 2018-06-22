@@ -32,7 +32,9 @@
 package net.imagej.matlab;
 
 import static org.junit.Assert.assertTrue;
+
 import io.scif.SCIFIOService;
+import io.scif.services.DatasetIOService;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -71,7 +73,7 @@ public class ExternalMATLABIT {
 
 	private Context context;
 	private ScriptService scriptService;
-	private DatasetService datasetService;
+	private DatasetIOService datasetIOService;
 	private DisplayService displayService;
 	private MATLABService matlabService;
 	private final String threeDims =
@@ -105,7 +107,7 @@ public class ExternalMATLABIT {
 				MATLABService.class, DisplayService.class, AutoscaleService.class,
 				WidgetService.class, ImageJMATLABService.class, OptionsService.class);
 		scriptService = context.getService(ScriptService.class);
-		datasetService = context.getService(DatasetService.class);
+		datasetIOService = context.getService(DatasetIOService.class);
 		displayService = context.getService(DisplayService.class);
 		matlabService = context.getService(MATLABService.class);
 	}
@@ -114,7 +116,7 @@ public class ExternalMATLABIT {
 	public void tearDown() {
 		context.dispose();
 		scriptService = null;
-		datasetService = null;
+		datasetIOService = null;
 		displayService = null;
 		matlabService = null;
 	}
@@ -127,7 +129,7 @@ public class ExternalMATLABIT {
 	public void testParameterAliasing() throws InterruptedException,
 		ExecutionException, IOException, ScriptException
 	{
-		final Dataset dataset = datasetService.open(threeDims);
+		final Dataset dataset = datasetIOService.open(threeDims);
 
 		final ScriptModule scriptModule =
 			scriptService.run("alias.m", sumScript, true, "data", dataset).get();
@@ -145,7 +147,7 @@ public class ExternalMATLABIT {
 	public void testMatrixPreprocessing() throws InterruptedException,
 		ExecutionException, IOException, ScriptException
 	{
-		final Dataset dataset = datasetService.open(threeDims);
+		final Dataset dataset = datasetIOService.open(threeDims);
 
 		// Set the dataset as active, to be picked up by preprocessor
 		final Display<?> createDisplay = displayService.createDisplay(dataset);
@@ -168,8 +170,8 @@ public class ExternalMATLABIT {
 	public void testMatrixMultiplication() throws InterruptedException,
 		ExecutionException, IOException, ScriptException
 	{
-		final Dataset dataset1 = datasetService.open(twoDims);
-		final Dataset dataset2 = datasetService.open(twoDims);
+		final Dataset dataset1 = datasetIOService.open(twoDims);
+		final Dataset dataset2 = datasetIOService.open(twoDims);
 
 		final ScriptModule scriptModule =
 			scriptService.run("multiply.m", multScript, true, "A", dataset1, "B",
@@ -188,7 +190,7 @@ public class ExternalMATLABIT {
 	public void testSettingMatlabVars() throws InterruptedException,
 		ExecutionException, IOException, ScriptException
 	{
-		final Dataset dataset = datasetService.open(threeDims);
+		final Dataset dataset = datasetIOService.open(threeDims);
 		matlabService.getInstances();
 		final ImageJMATLABCommands ijCmds =
 			matlabService.getInstance(ImageJMATLABCommands.class);
