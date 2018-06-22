@@ -101,6 +101,7 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 		<releaseProfiles>deploy-to-imagej</releaseProfiles>
 
 		<matlabcontrol.version>4.1.0</matlabcontrol.version>
+		<imagej-legacy.version>0.32.1</imagej-legacy.version>
 	</properties>
 
 	<repositories>
