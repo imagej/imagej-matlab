@@ -1,11 +1,29 @@
 function ImageJ(open_imagej, verbose)
-% This script adds the ImageJ libraries to the MATLAB classpath. By default,
-% it will also start up an ImageJ instance within MATLAB.
-% Parameters:
-%  open_imagej - If false, an ImageJ instance will not be launched. Default: true
-%  verbose - If true, a confirmation message will be printed the first time
-%            a jar is added to the MATLAB classpath. Default: false
+% This function ImageJ adds the ImageJ libraries to the MATLAB classpath.
+% By default, it will also start up an ImageJ instance within MATLAB.
+%
+% SYNTAX
+%
+% ImageJ
+% ImageJ(open_imagej)
+% ImageJ(open_imagej,verbose)
+%
+% PARAMETERS
+%
+%  open_imagej   true (default) | false | 1 | 0  
+%
+%                If false, an ImageJ instance will not be launched.
+%
+%  verbose       true | false (default) | 1 | 0  
+%
+%                If true, a confirmation message will be printed the first time
+%                a jar is added to the MATLAB classpath.
+%
 % Author: Jacques Pecreaux, Johannes Schindelin, Jean-Yves Tinevez, Mark Hiner
+%
+% See also
+% ImageJ_javaaddpath
+
 
 if nargin < 1
     open_imagej = true;
@@ -16,9 +34,8 @@ if nargin < 2
 end
 
 %% Get the ImageJ directory
-imagej_directory = fileparts(fileparts(mfilename('fullpath')));
 
-ImageJ_javaaddpath(imagej_directory,verbose);
+ImageJ_javaaddpath(verbose);
 
 %% Maybe open the ImageJ window
 import net.imagej.matlab.*;

@@ -1,4 +1,4 @@
-function ImageJ_javaaddpath(imagej_directory,varargin)
+function ImageJ_javaaddpath(varargin)
 % ImageJ_javaaddpath will add the paths for ImageJ/Fiji jar files to
 % dyanamic Java class path using javaaddpath, without launching ImageJ
 % instance. 
@@ -11,15 +11,10 @@ function ImageJ_javaaddpath(imagej_directory,varargin)
 % Virtually all of the code is taken from ImageJ.m.
 %
 % SYNTAX
-% ImageJ_javaaddpath(imagej_directory)
-% ImageJ_javaaddpath(imagej_directory,verbose)
+% ImageJ_javaaddpath
+% ImageJ_javaaddpath(verbose)
 %
 % INPUT ARGUMENTS
-% imagej_directory           
-%             char vector
-%             The directory path for 'Fiji.app'.
-%
-%             Note that you can't include 'scripts' as 'Fiji.app\scripts'
 %
 % verbose     true | false (default) | 1 | 0
 %             (Optional) true or 1 will print added java paths to the
@@ -28,16 +23,16 @@ function ImageJ_javaaddpath(imagej_directory,varargin)
 %
 % EXAMPLE
 %
-%     fijipath = 'D\\Fiji.app\\';
+%     fijiscriptpath = 'D:\Fiji.app\scripts';
 % 
-%     addpath(fullfile(fijipath,'scripts'))
+%     addpath(fijiscriptpath)
 %     ImageJ
 % 
 %     I = imread('corn.tif',3); % uint8
 % 
 %     parfor i = 1:10
-%         addpath(fullfile(fijipath,'scripts')) % to make MATLAB functions for ImageJ available
-%         ImageJ_javaaddpath(fijipath) % to make ImageJ Java class available
+%         addpath(fijiscriptpath) % to make MATLAB functions for ImageJ available
+%         ImageJ_javaaddpath % to make ImageJ Java class available
 % 
 %         I1 = I - uint8(10*i);
 %         imp = copytoImagePlus(I1);
@@ -62,30 +57,15 @@ function ImageJ_javaaddpath(imagej_directory,varargin)
 %
 % See also
 % ImageJ, javaaddpath, parfor
-%
-% %TODO ImageJ.m can wrap this function
 
 
 p = inputParser;
-p.addRequired('imagej_directory',@(x) isfolder(x));
 p.addOptional('verbose',false,@(x) isscalar(x) && x == 1 || x == 0);
-p.parse(imagej_directory,varargin{:});
+p.parse(varargin{:});
 
 verbose = p.Results.verbose;
 
-
-if endsWith(imagej_directory,[filesep,'scripts'])
-    
-   error('imagej_directory %s should not include ''scripts''',...
-       imagej_directory) 
-    
-end
-
-% 
-% %% Get the ImageJ directory
-% % imagej_directory = fileparts(fileparts(mfilename('fullpath')));
-% 
-% imagej_directory = fileparts(FijiScriptFolder);
+imagej_directory = fileparts(fileparts(mfilename('fullpath')));
 
 %% Get the Java classpath
 classpath = javaclasspath('-all');
