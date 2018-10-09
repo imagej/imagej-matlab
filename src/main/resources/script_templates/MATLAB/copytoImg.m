@@ -25,7 +25,7 @@ function img = copytoImg(I)
 % Jean-Yves Tinevez - 2013
 
 % Permute dim 0 and 1 (X & Y) so that we match MATLAB convention in ImgLib
-I = permute(I, [2 1]);
+I = permute(I, [2 1 3:ndims(I)]);
 
 % Copy to ImgLib2
 try
