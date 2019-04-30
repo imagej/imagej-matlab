@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.scijava</groupId>
 		<artifactId>pom-scijava</artifactId>
-		<version>22.3.0</version>
+		<version>26.0.0</version>
 		<relativePath />
 	</parent>
 
@@ -97,8 +97,8 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 		<license.inceptionYear>2009</license.inceptionYear>
 		<license.excludes>**/script_templates/**</license.excludes>
 
-		<!-- NB: Deploy releases to the ImageJ Maven repository. -->
-		<releaseProfiles>deploy-to-imagej</releaseProfiles>
+		<!-- NB: Deploy releases to the SciJava Maven repository. -->
+		<releaseProfiles>deploy-to-scijava</releaseProfiles>
 
 		<!-- NB: Skip integration tests by default. -->
 		<skipITs>true</skipITs>
@@ -109,8 +109,8 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 
 	<repositories>
 		<repository>
-			<id>imagej.public</id>
-			<url>https://maven.imagej.net/content/groups/public</url>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
 		</repository>
 	</repositories>
 
