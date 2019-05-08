@@ -50,6 +50,10 @@
 			<roles><role>founder</role></roles>
 			<properties><id>hinerm</id></properties>
 		</contributor>
+		<contributor>
+			<name>Philipp Huebner</name>
+			<properties><id>bastelflp</id></properties>
+		</contributor>
 	</contributors>
 
 	<mailingLists>
