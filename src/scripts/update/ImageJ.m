@@ -42,6 +42,8 @@ import net.imagej.matlab.*;
 if open_imagej
     ImageJMATLAB.start(verbose);
 else
+    ij.ImageJ([],ij.ImageJ.NO_SHOW); % same as Miji(false) .... but this prevents later use of ImageJ.m
+    
     % initialize ImageJ with the headless flag
     % ImageJMATLAB.start(verbose, '--headless'); % this does not work
     
