@@ -44,6 +44,8 @@ if open_imagej
 else
     ij.ImageJ([],ij.ImageJ.NO_SHOW); % same as Miji(false) .... but this prevents later use of ImageJ.m
     
+    warning('ImageJ is running in headless mode. Use ''ij.IJ.run("Quit","")'' to quit the instance.')
+    
     % initialize ImageJ with the headless flag
     % ImageJMATLAB.start(verbose, '--headless'); % this does not work
     
