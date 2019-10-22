@@ -11,7 +11,7 @@
 
 	<groupId>net.imagej</groupId>
 	<artifactId>imagej-matlab</artifactId>
-	<version>0.7.4-SNAPSHOT</version>
+	<version>0.7.4</version>
 
 	<name>ImageJ-MATLAB</name>
 	<description>Open source ImageJ extensions and utilities for transferring ImageJ data structures between MATLAB and an external ImageJ application, or running ImageJ from within MATLAB.</description>
@@ -66,7 +66,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
 		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
-		<tag>HEAD</tag>
+		<tag>imagej-matlab-0.7.4</tag>
 		<url>https://github.com/imagej/imagej-matlab</url>
 	</scm>
 	<issueManagement>
