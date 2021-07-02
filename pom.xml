@@ -74,8 +74,8 @@
 		<url>https://github.com/imagej/imagej-matlab/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Travis CI</system>
-		<url>https://travis-ci.org/imagej/imagej-matlab</url>
+		<system>GitHub Actions</system>
+		<url>https://github.com/imagej/imagej-matlab/actions</url>
 	</ciManagement>
 
 	<properties>
@@ -90,7 +90,7 @@ Institute of Molecular Cell Biology and Genetics.</license.copyrightOwners>
 		<license.excludes>**/script_templates/**</license.excludes>
 
 		<!-- NB: Deploy releases to the SciJava Maven repository. -->
-		<releaseProfiles>deploy-to-scijava</releaseProfiles>
+		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
 
 		<!-- NB: Skip integration tests by default. -->
 		<skipITs>true</skipITs>

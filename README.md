@@ -1,4 +1,4 @@
-[![](https://travis-ci.org/imagej/imagej-matlab.svg?branch=master)](https://travis-ci.org/imagej/imagej-matlab)
+[![](https://github.com/imagej/imagej-matlab/actions/workflows/build-main.yml/badge.svg)](https://github.com/imagej/imagej-matlab/actions/workflows/build-main.yml)
 
 ImageJ MATLAB
 =============
