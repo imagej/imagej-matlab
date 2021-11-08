@@ -64,7 +64,7 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/imagej/imagej-matlab</connection>
+		<connection>scm:git:https://github.com/imagej/imagej-matlab</connection>
 		<developerConnection>scm:git:git@github.com:imagej/imagej-matlab</developerConnection>
 		<tag>HEAD</tag>
 		<url>https://github.com/imagej/imagej-matlab</url>
