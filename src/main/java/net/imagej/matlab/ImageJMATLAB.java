@@ -240,9 +240,9 @@ public class ImageJMATLAB {
 			final LegacyService legacyService =
 				context().getService(LegacyService.class);
 
-			if (legacyService != null) {
-				((ij.ImageJ) legacyService.getIJ1Helper().getIJ())
-					.exitWhenQuitting(false);
+			if (legacyService != null && legacyService.isActive()) {
+				final ij.ImageJ ij = (ij.ImageJ) legacyService.getIJ1Helper().getIJ();
+				if (ij != null) ij.exitWhenQuitting(false);
 			}
 		}
 	}
