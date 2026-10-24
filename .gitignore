@@ -2,6 +2,7 @@
 .metadata
 .project
 .settings
+/.factorypath
 target
 *.swp
 /.idea
